@@ -1,0 +1,27 @@
+/* 全局样式 */
+html, body, #app {
+  height: 100%;
+}
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.el-submenu li.el-menu-item{
+  min-width: 180px;
+}
+/* 组件的名字是什么 将来的标签上就会有一个相同的类 */
+.el-card{
+  margin-top: 15px;
+}
+.el-table{
+  margin-top: 15px;
+}
+.pager_container{
+  margin-top: 15px;
+  text-align: right;
+}
+
+.el-step__title{
+  font-size: 12px;
+}
