@@ -1,15 +1,14 @@
 <template>
   <div id="app">
-    初始化项目
+    <!-- 一级路由容器 -->
+    <router-view/>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'App',
-  components: {
-  }
+  name: 'App'
 }
 </script>
 
