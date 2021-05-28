@@ -10,9 +10,8 @@ export default {
     return {
     }
   },
-  async  created () {
-    const { data } = await this.$http.get('menus')
-    console.log(data)
+  created () {
+
   }
 }
 </script>

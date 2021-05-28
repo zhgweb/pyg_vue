@@ -12,7 +12,7 @@ const local = {
     const jsonStr = window.sessionStorage.getItem(KEY)
     return JSON.parse(jsonStr)
   },
-  derUser () {
+  delUser () {
     // clear() 清除所有的数据  不建议使用
     // setItem(KEY,'') 删除除
     // 从 sessionStorage 删除保存的数据

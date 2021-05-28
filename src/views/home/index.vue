@@ -3,8 +3,9 @@
     <el-aside :width="isCollapse ?'200px':'60px'">
       <div class="logo" :class="{smallLogo:!isCollapse}"></div>
       <el-menu
-      :collapse="!isCollapse"
-      :collapse-transition="false"
+        router
+        :collapse="!isCollapse"
+        :collapse-transition="false"
         background-color="#002033"
         default-active="1"
         class="el-menu-vertical-demo"
@@ -12,72 +13,18 @@
         @close="handleClose"
         text-color="#fff"
         active-text-color="#ffd04b"
-        unique-opened
-      >
-        <el-submenu index="1">
+        unique-opened>
+          <!--一级菜单-->
+          <!-- 注意： 一级菜单 index 和 二级菜单 index 是有从属关系的 -->
+          <!-- 一级菜单的索引 id  二级菜单的索引  item.id-lastItem.id -->
+        <el-submenu :index="item.id.toString()" v-for="(item,i) in menusData" :key="item.id" >
           <template slot="title">
-            <i class="el-icon-user-solid"></i>
-            <span>用户管理</span>
+            <i :class="['iconfont',iconArr[i]]"></i>
+            <span>&nbsp;{{item.authName}}</span>
           </template>
+           <!--二级菜单  只要index唯一就可以了 -->
           <el-menu-item-group>
-            <el-menu-item index="1-1"
-              ><i class="el-icon-menu"></i>用户列表</el-menu-item
-            >
-          </el-menu-item-group>
-        </el-submenu>
-
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-setting"></i>
-            <span>权限管理</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="2-1"
-              ><i class="el-icon-menu"></i>角色列表</el-menu-item
-            >
-            <el-menu-item index="2-2"
-              ><i class="el-icon-menu"></i>权限列表</el-menu-item
-            >
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="3">
-          <template slot="title">
-            <i class="el-icon-shopping-cart-2"></i>
-            <span>商品管理</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="3-1"
-              ><i class="el-icon-menu"></i>商品列表</el-menu-item
-            >
-            <el-menu-item index="3-2"
-              ><i class="el-icon-menu"></i>分类参数</el-menu-item
-            >
-            <el-menu-item index="3-3"
-              ><i class="el-icon-menu"></i>商品分类</el-menu-item
-            >
-          </el-menu-item-group>
-        </el-submenu>
-
-        <el-submenu index="4">
-          <template slot="title">
-            <i class="el-icon-document"></i>
-            <span>订单管理</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="4-1"
-              ><i class="el-icon-menu"></i>订单列表</el-menu-item
-            >
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="5">
-          <template slot="title">
-            <i class="el-icon-picture-outline"></i>
-            <span>数据统计</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="5-1"
-              ><i class="el-icon-menu"></i>数据报表</el-menu-item
-            >
+            <el-menu-item :index="'/'+lastItem.path" v-for="lastItem in item.children" :key="lastItem.id"><i class="el-icon-menu"></i>{{lastItem.authName}}</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -88,7 +35,7 @@
           <span class="header-icon" :class="!isCollapse?'el-icon-s-unfold':'el-icon-s-fold'" @click="openFn()"></span>
           <span>品优购后台管理系统</span>
         </div>
-        <el-button type="danger" round size='mini' style="float:right;margin-top:15px;">退出</el-button>
+        <el-button type="danger" round size='mini' style="float:right;margin-top:15px;" @click="outFn()">退出</el-button>
       </el-header>
       <el-main>
       <!-- 二级路由 -->
@@ -99,13 +46,16 @@
 </template>
 
 <script>
+import local from '@/utils/local'
 export default {
   data () {
     return {
       isCollapse: true,
-      iconArr: ['icon-user-fill', 'icon-cog', 'icon-shoppingcart', 'icon-file', 'icon-chart-area']
+      iconArr: ['icon-user-fill', 'icon-cog', 'icon-shoppingcart', 'icon-file', 'icon-chart-area'],
+      menusData: []
     }
   },
+  mounted () { this.menusFn() },
   methods: {
     handleOpen (key, keyPath) {
       console.log(key, keyPath)
@@ -113,9 +63,19 @@ export default {
     handleClose (key, keyPath) {
       console.log(key, keyPath)
     },
+    // 开关列表
     openFn () {
       this.isCollapse = !this.isCollapse
-      console.log(this.isCollapse)
+    },
+    // 退出登录
+    outFn () {
+      local.delUser()
+      this.$router.push('/login')
+    },
+    async menusFn () {
+      const { data: { data } } = await this.$http.get('menus')
+      this.menusData = data
+      console.log(data)
     }
   }
 }
