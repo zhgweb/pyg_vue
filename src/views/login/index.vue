@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import loacl from '@/utils/local'
 export default {
   data () {
     return {
@@ -55,7 +56,7 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const { data: { data } } = await this.$http.post('login', this.ruleForm)
-          console.log(data)
+          loacl.setUser(data.token)
           this.$router.push('/')
         }
       })
