@@ -4,13 +4,13 @@
       <div class="logo" :class="{smallLogo:!isCollapse}"></div>
       <el-menu
         router
+        ref="menu"
         :collapse="!isCollapse"
         :collapse-transition="false"
         background-color="#002033"
-        default-active="1"
+        :default-active="$route.path"
         class="el-menu-vertical-demo"
         @open="handleOpen"
-        @close="handleClose"
         text-color="#fff"
         active-text-color="#ffd04b"
         unique-opened>
@@ -52,16 +52,21 @@ export default {
     return {
       isCollapse: true,
       iconArr: ['icon-user-fill', 'icon-cog', 'icon-shoppingcart', 'icon-file', 'icon-chart-area'],
-      menusData: []
+      menusData: [],
+      KeyIndex: ''
     }
   },
   mounted () { this.menusFn() },
+  watch: {
+    $route () {
+      if (this.$route.path === '/') {
+        this.$refs.menu.close(this.KeyIndex)
+      }
+    }
+  },
   methods: {
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
+    handleOpen (key) {
+      this.KeyIndex = key
     },
     // 开关列表
     openFn () {
@@ -75,7 +80,6 @@ export default {
     async menusFn () {
       const { data: { data } } = await this.$http.get('menus')
       this.menusData = data
-      console.log(data)
     }
   }
 }

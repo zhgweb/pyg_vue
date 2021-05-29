@@ -1,6 +1,6 @@
 <template>
-  <div class='users-container'>
-      我是用户列表
+  <div class="users-container">
+
   </div>
 </template>
 
