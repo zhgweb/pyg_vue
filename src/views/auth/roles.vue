@@ -1,6 +1,9 @@
 <template>
-  <div class='roles-container'>
-      我是角色列表
+  <div class="roles-container">
+    <my-bread>
+      <template v-slot:Menus>权限管理</template>
+      <template v-slot:Menu>角色列表</template>
+    </my-bread>
   </div>
 </template>
 

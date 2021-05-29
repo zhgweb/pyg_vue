@@ -9,6 +9,9 @@ import axios from '@/api'// 引入axios
 import './assets/fonts/iconfont.css'
 /* 依赖全局样式文件 */
 import './assets/css/global.css'
+// 挂载自定义插件
+import plugin from '@/components'
+Vue.use(plugin)// 全局使用
 Vue.use(ElementUI)// 全局使用
 Vue.config.productionTip = false
 Vue.prototype.$http = axios// 把axios挂载到vue上

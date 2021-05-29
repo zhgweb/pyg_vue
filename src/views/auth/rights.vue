@@ -1,6 +1,9 @@
 <template>
-  <div class='rights-container'>
-      我是权限列表
+  <div class="rights-container">
+    <my-bread>
+      <template v-slot:Menus>权限管理</template>
+      <template v-slot:Menu>权限列表</template>
+    </my-bread>
   </div>
 </template>
 
