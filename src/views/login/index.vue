@@ -55,9 +55,14 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          const { data: { data } } = await this.$http.post('login', this.ruleForm)
-          loacl.setUser(data.token)
-          this.$router.push('/')
+          // 捕获异常
+          try {
+            const { data: { data } } = await this.$http.post('login', this.ruleForm)
+            loacl.setUser(data.token)
+            this.$router.push('/')
+          } catch (e) {
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     },
