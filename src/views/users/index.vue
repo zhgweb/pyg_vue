@@ -44,7 +44,7 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button-group>
               <el-button
@@ -82,6 +82,7 @@
     <!-- 添加用户 -->
     <el-dialog
       title="添加用户"
+      :close-on-click-modal="false"
       :visible.sync="addVisible"
       width="400px"
       :before-close="handleClose"
@@ -113,6 +114,7 @@
     <!-- 编辑用户 -->
     <el-dialog
       title="编辑用户"
+      :close-on-click-modal="false"
       :visible.sync="editVisible"
       width="400px"
       :before-close="handleClose"
@@ -144,7 +146,8 @@
     </el-dialog>
     <!-- 分配角色 -->
     <el-dialog
-      title="编辑用户"
+      title="分配角色"
+      :close-on-click-modal="false"
       :visible.sync="roleVisible"
       width="400px"
       :before-close="handleClose"
@@ -374,13 +377,22 @@ export default {
       this.getTable()
     },
     // 删除
-    async DeleteVisible (id) {
-      const {
-        data: { meta }
-      } = await this.$http.delete(`users/${id}`)
-      if (meta.status !== 200) return this.$message.error(meta.msg)
-      this.$message.success(meta.msg)
-      this.getTable()
+    DeleteVisible (id) {
+      this.$confirm('是否删除该数据?', '温馨提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+          // 点击了确认  发请求
+          const {
+            data: { meta }
+          } = await this.$http.delete(`users/${id}`)
+          if (meta.status !== 200) return this.$message.error(meta.msg)
+          this.$message.success(meta.msg)
+          this.getTable()
+        })
+        .catch(() => {})
     }
   }
 }
