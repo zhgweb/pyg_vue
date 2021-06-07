@@ -13,7 +13,7 @@ import './assets/css/global.css'
 import plugin from '@/components'
 Vue.use(plugin)// 全局使用
 Vue.use(ElementUI)// 全局使用
-Vue.config.productionTip = false
+Vue.config.productionTip = false/* 控制台的日志更详细一些 true  */
 Vue.prototype.$http = axios// 把axios挂载到vue上
 new Vue({
   router,

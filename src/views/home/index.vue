@@ -59,7 +59,8 @@ export default {
   mounted () { this.menusFn() },
   watch: {
     $route () {
-      if (this.$route.path === '/') {
+      console.log(this.$route.path)
+      if (this.$route.path === '/' || this.$route.path === '/goods/add') {
         this.$refs.menu.close(this.KeyIndex)
       }
     }

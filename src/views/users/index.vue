@@ -399,8 +399,4 @@ export default {
 </script>
 
 <style scoped lang='less'>
-.el-pagination {
-  text-align: center;
-  margin-top: 20px;
-}
 </style>
