@@ -4,7 +4,6 @@
       <template v-slot:Menus>商品管理</template>
       <template v-slot:Menu>商品列表</template>
     </my-bread>
-    <!-- <router-view></router-view> -->
     <el-card>
       <el-row :gutter="20">
         <el-col :span="6">
