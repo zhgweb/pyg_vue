@@ -15,7 +15,6 @@ export default {
     Vue.use(VueQuillEditor /* { default global options } */)
     // 过滤器
     Vue.filter('ft', (v) => {
-      console.log(v)
       return moment(v * 1000).format('YYYY-MM-DD HH:mm:ss')
     })
   }
